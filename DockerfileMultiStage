@@ -1,8 +1,8 @@
 FROM gradle:5.4.1-jdk8 as builder
 
 USER root
-COPY . balance
-WORKDIR balance
+COPY . kotlin-clean-sample
+WORKDIR kotlin-clean-sample
 
 RUN gradle build --no-daemon
 
@@ -12,6 +12,6 @@ USER root
 
 EXPOSE 80
 
-COPY --from=builder /home/gradle/balance/build/libs/kotlin-clean-sample-1.0-SNAPSHOT.jar .
+COPY --from=builder /home/gradle/kotlin-clean-sample/build/libs/kotlin-clean-sample-1.0-SNAPSHOT.jar .
 
 ENTRYPOINT ["java", "-jar", "kotlin-clean-sample-1.0-SNAPSHOT.jar"]
