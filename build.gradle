@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+    id 'application'
+}
+
+group 'com.sample'
+version '1.0-SNAPSHOT'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+application {
+    mainClassName = 'com.sample.MainKt'
+}
+
+dependencies {
+    //Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.slf4j:slf4j-simple:1.7.26"
+
+    //Mongo Client
+    compile 'org.litote.kmongo:kmongo:3.11.1'
+
+    //Server
+    compile 'io.javalin:javalin:3.5.0'
+
+    //Deserializer
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
+
+    //Kafka Client
+    compile 'org.apache.kafka:kafka-clients:2.3.0'
+
+    //Logging
+    compile 'org.slf4j:slf4j-log4j12:1.7.25'
+
+    //Test
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.sample.MainKt'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
