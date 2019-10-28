@@ -9,7 +9,8 @@ class CreateMessageImpl(private val messageGateway: MessageGateway?, private val
     CreateMessage {
     override fun create(request: CreateMessage.Request): CreateMessage.Response {
         val message = messageGateway!!.create(request.toDomain())
-        messagePublisher!!.publish(message)
+        //TODO: Fix docker connectivity to use queue in localhost
+        //messagePublisher!!.publish(message)
         return CreateMessage.Response(message)
     }
 

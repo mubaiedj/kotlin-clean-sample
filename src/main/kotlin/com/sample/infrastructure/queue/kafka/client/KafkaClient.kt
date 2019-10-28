@@ -6,19 +6,15 @@ import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
-import org.apache.log4j.Logger
 import java.util.*
 
 class SimpleKafkaClient() {
-
-    private val logger = Logger.getLogger(SimpleKafkaClient::class.java)
 
     fun createProducer(brokers: String): Producer<String, String> {
         val props = Properties()
         props["bootstrap.servers"] = brokers
         props["key.serializer"] = StringSerializer::class.java.canonicalName
         props["value.serializer"] = StringSerializer::class.java.canonicalName
-        logger.info("Producer Created")
         return KafkaProducer<String, String>(props)
     }
 
