@@ -8,10 +8,14 @@ class Router : EndpointGroup {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    companion object {
+        private const val path: String = "model-b"
+    }
+
     init {
-        path("model-a") {
-            get(GETModelBHandler())
-            patch(PATCHModelBHandler())
+        path(path) {
+            GETModelBHandler()
+            PATCHModelBHandler()
         }
     }
 }
