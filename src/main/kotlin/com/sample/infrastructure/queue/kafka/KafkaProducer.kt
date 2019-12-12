@@ -1,7 +1,7 @@
 package com.sample.infrastructure.queue.kafka
 
 import com.sample.infrastructure.queue.MessagePublisher
-import com.sample.infrastructure.queue.kafka.client.SimpleKafkaClient
+import com.sample.infrastructure.queue.kafka.client.KafkaClient
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.util.StdDateFormat
@@ -10,14 +10,19 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import com.sample.domain.entities.Message
 
 class KafkaProducer(): MessagePublisher {
-    private val simpleKafkaClient = SimpleKafkaClient()
+    private val kafkaClient = KafkaClient()
 
     override fun publish(message: Message) {
-        val producer = simpleKafkaClient.createProducer("127.0.0.1:9092")
-        val messageJson = jsonMapper.writeValueAsString(message)
-        producer.send(ProducerRecord("test", messageJson))
-        producer.flush()
-        producer.close()
+        val producer = kafkaClient.createProducer("127.0.0.1:9092")
+        try {
+            val messageJson = jsonMapper.writeValueAsString(message)
+            producer.send(ProducerRecord("test", messageJson))
+            producer.flush()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            producer.close()
+        }
     }
 
     private val jsonMapper = ObjectMapper().apply {

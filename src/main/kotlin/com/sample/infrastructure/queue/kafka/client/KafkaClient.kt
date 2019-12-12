@@ -8,7 +8,7 @@ import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
 import java.util.*
 
-class SimpleKafkaClient() {
+class KafkaClient() {
 
     fun createProducer(brokers: String): Producer<String, String> {
         val props = Properties()

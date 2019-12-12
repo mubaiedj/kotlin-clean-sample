@@ -1,7 +1,6 @@
 package com.sample.domain.usecases
 
 import com.sample.domain.gateway.MessageGateway
-import com.sample.domain.usecases.GetMessagesByType
 
 class GetMessagesByTypeImpl(private val messageGateway: MessageGateway?) :
     GetMessagesByType {
